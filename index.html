@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>送给你的小礼物</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    position:relative;
+    background:linear-gradient(180deg,#fff7fb,#ffe8f2);
+    font-family:"Microsoft YaHei",sans-serif;
+}
+
+#tip{
+    position:absolute;
+    top:25px;
+    width:100%;
+    text-align:center;
+    color:#d76b97;
+    font-size:14px;
+    z-index:100;
+}
+
+#heart{
+    position:absolute;
+    font-size:70px;
+    cursor:pointer;
+    user-select:none;
+    z-index:50;
+
+    transition:
+        left .45s ease,
+        top .45s ease,
+        font-size .35s ease,
+        transform .3s ease;
+}
+
+.floatText{
+    position:absolute;
+    color:#ff5b92;
+    font-weight:bold;
+    pointer-events:none;
+    white-space:nowrap;
+
+    animation:floatUp 2s forwards;
+}
+
+@keyframes floatUp{
+
+    0%{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+        transform:translateY(-80px);
+    }
+}
+
+.wallText{
+    position:absolute;
+    color:#ff7aa8;
+    font-size:15px;
+    opacity:.85;
+    animation:appear .4s;
+}
+
+@keyframes appear{
+
+    from{
+        opacity:0;
+        transform:scale(.6);
+    }
+
+    to{
+        opacity:.85;
+        transform:scale(1);
+    }
+}
+
+#overlay{
+
+    display:none;
+
+    position:absolute;
+    inset:0;
+
+    background:rgba(255,255,255,.45);
+
+    backdrop-filter:blur(3px);
+
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+#bigHeart{
+    font-size:120px;
+    opacity:0;
+}
+
+.heartGrow{
+    animation:heartGrow 2.2s forwards;
+}
+
+@keyframes heartGrow{
+
+    0%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    70%{
+        opacity:1;
+        transform:scale(4);
+    }
+
+    100%{
+        opacity:0;
+        transform:scale(6);
+    }
+}
+
+#final{
+    opacity:0;
+    transform:translateY(20px);
+    transition:all 1.5s ease;
+    text-align:center;
+}
+
+.card{
+
+    margin-top:15px;
+
+    background:white;
+
+    padding:18px 28px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.cardTitle{
+
+    color:#c84d7b;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    line-height:1.8;
+}
+
+.cardSmall{
+
+    margin-top:10px;
+
+    color:#d68aa4;
+
+    font-size:14px;
+}
+
+#roseSvg{
+
+    width:180px;
+    height:240px;
+    cursor:pointer;
+}
+
+#easter{
+
+    margin-top:10px;
+
+    color:#d68aa4;
+
+    font-size:13px;
+}
+
+.petal{
+
+    position:absolute;
+
+    pointer-events:none;
+
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+
+    from{
+        transform:
+        translateY(-50px)
+        rotate(0deg);
+
+        opacity:1;
+    }
+
+    to{
+        transform:
+        translateY(110vh)
+        rotate(360deg);
+
+        opacity:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="tip">
+(๑•ᴗ•๑) 点点爱心试试
+</div>
+
+<div id="heart">❤️</div>
+
+<div id="overlay">
+
+    <div id="bigHeart">❤️</div>
+
+    <div id="final">
+
+        <svg id="roseSvg" viewBox="0 0 200 260">
+
+            <path
+            d="M100 240
+               C100 180
+               100 120
+               100 70"
+            stroke="#379b5b"
+            stroke-width="8"
+            fill="none"/>
+
+            <ellipse
+            cx="82"
+            cy="140"
+            rx="18"
+            ry="10"
+            fill="#60c176"
+            transform="rotate(-30 82 140)"/>
+
+            <ellipse
+            cx="118"
+            cy="110"
+            rx="18"
+            ry="10"
+            fill="#60c176"
+            transform="rotate(30 118 110)"/>
+
+            <circle
+            cx="100"
+            cy="55"
+            r="28"
+            fill="#e63d74"/>
+
+            <ellipse
+            cx="82"
+            cy="48"
+            rx="22"
+            ry="30"
+            fill="#d81b60"/>
+
+            <ellipse
+            cx="118"
+            cy="48"
+            rx="22"
+            ry="30"
+            fill="#d81b60"/>
+
+            <ellipse
+            cx="100"
+            cy="32"
+            rx="20"
+            ry="28"
+            fill="#f24c88"/>
+
+        </svg>
+
+        <div class="card">
+
+            <div class="cardTitle">
+                美丽的花<br>
+                送给漂亮的你
+            </div>
+
+            <div class="cardSmall">
+                （其实你比花更好看一点 ✨）
+            </div>
+
+            <div id="easter">
+                点一下玫瑰看看
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const praises = [
+
+"今天也很可爱",
+"笑起来特别好看",
+"眼睛里有星星",
+"温柔值满分",
+"很有亲和力",
+"越看越耐看",
+"特别有气质",
+"让人心情变好",
+"很有自己的魅力",
+"像小太阳一样",
+"声音很好听",
+"值得被偏爱",
+"真的很优秀",
+"让人忍不住微笑",
+"闪闪发光",
+"可爱超标啦",
+"有一种特别的温柔",
+"今天也值得被夸奖",
+"希望你每天都开心",
+"谢谢你的出现"
+
+];
+
+const heart =
+document.getElementById("heart");
+
+const tip =
+document.getElementById("tip");
+
+let count = 0;
+
+let size = 70;
+
+function moveHeart(){
+
+    const x =
+        Math.random() *
+        (window.innerWidth - 120);
+
+    const y =
+        Math.random() *
+        (window.innerHeight - 260)
+        + 100;
+
+    heart.style.left =
+        x + "px";
+
+    heart.style.top =
+        y + "px";
+}
+
+moveHeart();
+
+heart.onclick = ()=>{
+
+    count++;
+
+    const text =
+        praises[count - 1];
+
+    const rect =
+        heart.getBoundingClientRect();
+
+    const float =
+        document.createElement("div");
+
+    float.className =
+        "floatText";
+
+    float.innerText =
+        text;
+
+    float.style.left =
+        rect.left + "px";
+
+    float.style.top =
+        rect.top + "px";
+
+    document.body.appendChild(float);
+
+    setTimeout(()=>{
+        float.remove();
+    },2000);
+
+    const wall =
+        document.createElement("div");
+
+    wall.className =
+        "wallText";
+
+    wall.innerText =
+        text;
+
+    wall.style.left =
+        Math.random() *
+        (window.innerWidth - 180)
+        + "px";
+
+    wall.style.top =
+        Math.random() *
+        (window.innerHeight - 150)
+        + "px";
+
+    document.body.appendChild(wall);
+
+    size += 7;
+
+    heart.style.fontSize =
+        size + "px";
+
+    if(count === 15){
+
+        tip.innerHTML =
+        "(｡•̀ᴗ-)✧ 快点完啦～";
+    }
+
+    if(count === 18){
+
+        tip.innerHTML =
+        "(๑•̀ㅂ•́)و✧ 最后一点啦";
+    }
+
+    if(count === 20){
+
+        tip.innerHTML =
+        "(๑•ᴗ•๑) 完成啦";
+
+        finish();
+
+        return;
+    }
+
+    moveHeart();
+};
+
+function finish(){
+
+    heart.style.display =
+        "none";
+
+    tip.style.display =
+        "none";
+
+    const overlay =
+        document.getElementById("overlay");
+
+    overlay.style.display =
+        "flex";
+
+    const bigHeart =
+        document.getElementById("bigHeart");
+
+    bigHeart.style.opacity =
+        "1";
+
+    bigHeart.classList.add(
+        "heartGrow"
+    );
+
+    setTimeout(()=>{
+
+        const final =
+            document.getElementById(
+                "final"
+            );
+
+        final.style.opacity =
+            "1";
+
+        final.style.transform =
+            "translateY(0)";
+
+        flowerRain();
+
+    },2200);
+}
+
+function flowerRain(){
+
+    const timer = setInterval(()=>{
+
+        const petal =
+            document.createElement("div");
+
+        petal.className =
+            "petal";
+
+        petal.innerHTML =
+            "🌸";
+
+        petal.style.left =
+            Math.random()*100+"vw";
+
+        petal.style.fontSize =
+            (16+Math.random()*18)
+            +"px";
+
+        petal.style.animationDuration =
+            (4+Math.random()*4)
+            +"s";
+
+        document.body.appendChild(
+            petal
+        );
+
+        setTimeout(()=>{
+            petal.remove();
+        },8000);
+
+    },250);
+
+    setTimeout(()=>{
+        clearInterval(timer);
+    },8000);
+}
+
+document
+.getElementById("roseSvg")
+.onclick = ()=>{
+
+    document
+    .getElementById("easter")
+    .innerHTML =
+    "谢谢你看到这里 ✨";
+};
+
+</script>
+
+</body>
+</html>
